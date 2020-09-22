@@ -34,6 +34,7 @@ class TodoController extends Controller
     {
         $todo = Todo::make($request->validated());
         auth()->user()->todos()->save($todo);
+
         return response()->json([
             "data" => $todo
         ], 201);
@@ -60,6 +61,7 @@ class TodoController extends Controller
     public function update(StoreTodo $request, Todo $todo)
     {
         $todo->update($request->validated());
+
         return response()->json([
             "data" => $todo
         ], 200);
@@ -74,6 +76,7 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
+
         return response("Successfully deleted todo with id {$todo->id}.");
     }
 }

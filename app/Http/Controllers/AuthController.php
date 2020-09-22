@@ -27,10 +27,13 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Wrong email or password.'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json([
+            'token' => $this->respondWithToken($token),
+            'user' => \auth()->user()
+        ], 200);
     }
 
     /**
@@ -73,6 +76,7 @@ class AuthController extends Controller
     public function invalidate($forever = false)
     {
         auth()->invalidate($forever);
+
         return response()->json([
             'message' => 'Token successfully invalidated' . ($forever ? ' forever.' : '.')
         ]);

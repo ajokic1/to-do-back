@@ -21,6 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
+
         return response(User::all());
     }
 
@@ -46,6 +47,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $this->authorize('view', $user);
+
         return response($user);
     }
 
@@ -59,6 +61,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('update', $user);
+
         return response()->json([
             'data' => $user->update($request->validated())
         ], 200);
@@ -74,6 +77,7 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
         $user->delete();
+
         return response("Successfully deleted user $user->id.",200);
     }
 }
